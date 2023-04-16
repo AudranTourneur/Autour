@@ -2,7 +2,7 @@
 
 # Langage de programmation AUTOUR
 
-Le code compile avec la commande "make" dans ce dossier et est prévu pour un environnement Linux, la SDL est une dépendence requise.
+Le code compile avec la commande "make" dans ce dossier et est prévu pour un environnement Linux, la SDL est une dépendance requise.
 Note : l'utilisation de la SDL via WSL est possible mais non-triviale à cause de l'affichage graphique, il est préférable d'utiliser un vrai système Linux ou bien ou machine virtuelle si WSL ne fonctionne pas.
 
 Ce langage permet de faire des simulations graphiques sur un écran virtuel de 50x50 pixels en faisant appel à la SDL.
@@ -19,4 +19,4 @@ Par exemple :
 	./autour demo/colorier.autour
 	./autour demo/polynome.autour
 
-De plus, deux vidéos présentes dans le dosiser video/ présentent rapidement toutes les fonctionnalités du langage
+De plus, deux vidéos présentes dans le dosiser video/ présentent rapidement toutes les fonctionnalités du langage.
