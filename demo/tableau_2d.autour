@@ -1,0 +1,29 @@
+Procédure principale {
+	Soit X valant [];
+
+	Soit taille valant 3;
+	Soit i valant 0;
+	Tant que (i est inférieur à taille) {
+		Soit j valant 0;
+		X[i] = [];
+		Soit sous_tableau valant X[i];			# les tableaux sont copiés par référence
+		Tant que (j est inférieur à taille) {
+			sous_tableau[j] = i + "/" + j;
+			Soit j valant j+1;
+		};
+		Soit i valant i+1;
+	};
+
+	Imprimer X;
+
+	Soit i valant 0;
+	Tant que (i est inférieur à taille) {
+		Soit j valant 0;
+		Tant que (j est inférieur à taille) {
+			Imprimer X[i][j];
+			Soit j valant j+1;
+		};
+		Imprimer "---";
+		Soit i valant i+1;
+	};
+}

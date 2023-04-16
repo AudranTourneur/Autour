@@ -1,0 +1,28 @@
+Initialiser l'environnement graphique;
+
+Procédure principale {
+	Imprimer "début";
+
+	Soit taille valant 10;
+	Soit i valant 0;
+	Tant que (i est inférieur à 50) {
+		Soit j valant 0;
+		Tant que (j est inférieur à 50) {
+			Colorier le pixel (i, j) avec la couleur (i+j, j, 64);
+			Soit j valant j+1;
+			Si ((j modulo 15) est égal à 0) {
+				Mise à jour graphique;
+			};
+		};
+		Dormir 1;
+		Mise à jour graphique;
+		Soit i valant i+1;
+	};
+
+	Pour i allant de 0 à 10 {
+		Dormir 100;
+		Imprimer "Fin du programme dans " + (10-i);
+	};
+	Imprimer "Bye bye";
+	Dormir 300;
+}

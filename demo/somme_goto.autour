@@ -1,0 +1,16 @@
+Procédure principale {
+	Soit compteur valant 0;
+	Soit acc valant 0;
+
+@etiquette: 
+	Imprimer acc;
+	Soit compteur valant compteur + 1;
+	Soit acc valant acc + compteur;
+
+
+	Si (compteur est inférieur ou égal à 9) {
+		Aller @etiquette;
+	};
+
+	Imprimer "Somme finale des 10 premiers nombres : " + acc;
+}

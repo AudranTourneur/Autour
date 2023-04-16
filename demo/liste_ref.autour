@@ -1,0 +1,25 @@
+Procédure principale {
+	Soit x valant [1, 2, 3];
+	Imprimer x;
+
+	Soit y valant [[1]];
+	Imprimer y;
+
+	Soit sous_tableau valant y[0]; # copie par référence
+	Imprimer sous_tableau;
+	Imprimer sous_tableau[0];
+
+	sous_tableau[0] = 99;
+
+	Imprimer sous_tableau;
+	Imprimer y;
+
+	Imprimer "================";
+
+	Soit A valant [1, 2, 3];
+	Soit B valant A;
+	A[0] = 99;
+	B[1] = 111;
+	Imprimer A;
+	Imprimer B;
+}

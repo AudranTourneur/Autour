@@ -1,0 +1,14 @@
+Procédure principale {
+	Si ((1 est égal à 0) OU (2 est égal à 2)) {
+		Imprimer "Oui";
+	};
+
+	Si (1 est inférieur à 0) {
+		Imprimer "jamais";
+	}
+	Sinon {
+		Imprimer "oui!";
+	};
+
+	Imprimer "FIN";
+} 

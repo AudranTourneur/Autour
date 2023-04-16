@@ -1,0 +1,37 @@
+Procédure principale {
+	Imprimer "Début";
+
+	Soit i valant 0;
+	Tant que (i est inférieur à 5) {
+		Appeler afficher_ligne;
+		Soit i valant i+1;
+	};
+
+	Appeler A;
+
+	Imprimer "Fin";
+}
+
+Procédure afficher_ligne {
+	Imprimer "............";
+}
+
+Procédure A {
+	Imprimer "-A début";
+	Pour i allant de 0 à 3 {
+		Appeler B;
+	};
+	Imprimer "-A fin";
+}
+
+Procédure B {
+	Imprimer "--B début";
+	Pour j allant de 0 à 2 {
+		Appeler C;
+	};
+	Imprimer "--B fin";
+}
+
+Procédure C {
+	Imprimer "---C";
+}

@@ -1,0 +1,16 @@
+Procédure principale {
+	Pour i allant de 4 à 9 {
+		Imprimer "Bonjour " + i;
+	};
+
+	Soit x valant 3;
+	Pour j allant de 4+2 à 9*2+x {
+		Imprimer "Salut " + j;
+	};
+
+	Pour i allant de 0 à 4 {
+		Pour j allant de 0 à 4 {
+			Imprimer "i = " + i + " | j = " + j;
+		};
+	};
+}

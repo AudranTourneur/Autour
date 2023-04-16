@@ -1,0 +1,24 @@
+Procédure principale {
+	Soit X valant [ [1, 2, 3], [4, 5], [[[6]]], [7, "Bonjour", 9], racine(42), 2 * 3 + 9 ];
+
+	Imprimer "Racine de 42 = " + X[4];
+	X[1] = [4, 5, 6];
+	Imprimer X;
+
+	Soit i valant 0;
+	Tant que (i est inférieur à 6) {
+		Imprimer i + " => " + X[i];
+		Soit i valant i+1;
+	};
+
+	Soit Y valant [0];
+	Y[5] = 99;				# extension automatique
+	Imprimer Y; 			
+
+	Soit i valant 0;
+	Tant que (i est inférieur à 10) {
+		Y[i] = i * i;
+		Soit i valant i + 1;
+	};
+	Imprimer Y;
+}

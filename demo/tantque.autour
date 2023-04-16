@@ -1,0 +1,17 @@
+Procédure principale {
+	Soit X valant 3;
+	Soit Y valant 4;
+
+	Soit I valant 0;
+	Soit J valant 0;
+
+	Tant que (I est inférieur à X) {
+		Soit I valant I + 1;	
+		Imprimer "+++";
+		Soit J valant 0;
+		Tant que (J est inférieur à Y) {
+			Soit J valant J + 1;
+			Imprimer "-----";
+		};
+	};
+}
