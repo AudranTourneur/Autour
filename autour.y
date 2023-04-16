@@ -20,12 +20,12 @@
 
   using namespace std;
 
-  // éléments qui proviennent de l'analyse lexicale
   extern int yylex ();
   extern char* yytext;
   extern FILE *yyin;
   int yyerror(char *s);
 
+  // ProgrammeState est la classe qui contient l'état du programme
   ProgramState ps;
 %}
 
@@ -112,14 +112,43 @@ definitions : INITIALISER_GRAPHIQUE ';' { ps.addInstruction(GRAPHICS_INIT, 0, ""
             | { }
 fonctions : fonction fonctions { }
             | { }
-fonction : PROCEDURE VAR { ps.labels["@@procedure_" + string($2)] = ps.ic; } '{' instructions '}' { ps.addInstruction(RETURN, 0, ""); }
-etiquette : ETIQUETTE ':' { printf("got label %s %d\n", $1, ps.ic); ps.labels[$1] = ps.ic; }
+fonction : PROCEDURE VAR { 
+    // déclaration d'une procédure
+    // un label unique est générée pour identifier la procédure
+    // on ajoute un préfixe @@procedure_ pour éviter les conflits avec les étiquettes
+    ps.labels["@@procedure_" + string($2)] = ps.ic;
+ } '{' instructions '}' { 
+    // ajout automatique d'une instruction RETURN à la fin de la procédure
+    ps.addInstruction(RETURN, 0, "");
+}
+etiquette : ETIQUETTE ':' {  
+    // enregistrement de l'étiquette dans la table des étiquettes
+    ps.labels[$1] = ps.ic; 
+}
             | { }
 instructions :  etiquette instruction ';'  instructions {} 
              |  { }
-bloc_if: IF '(' expression ')' {$1.jump_if_false = ps.ic;  ps.addInstruction(JUMP_IF_FALSE, 0, "");} 
-                '{' instructions '}' {$1.jump = ps.ic; ps.addInstruction(JUMP, 0, ""); ps.allInstructions[$1.jump_if_false]->valueNum = ps.ic;}
-                bloc_else { ps.allInstructions[$1.jump]->valueNum = ps.ic; }
+bloc_if: IF '(' expression ')' {
+    // enregistrement de l'adresse qui sera ciblée par le saut si la condition est fausse
+    // en effet, on ne sait pas encore où se trouve la fin du bloc IF en cours d'analyse
+    $1.jump_if_false = ps.ic;  
+    // on saute le bloc si la condition est fausse, les arguments passés à la fonction addInstruction
+    // sont caducs puisque l'instruction sera modifiée par la suite
+    ps.addInstruction(JUMP_IF_FALSE, 0, "");
+} 
+                '{' instructions '}' {
+    // Enregistrement de l'adresse actuelle pour pouvoir la modifier dans le bloc ELSE
+    $1.jump = ps.ic;
+    // Saut inconditionnel vers la fin du bloc IF/ELSE
+    ps.addInstruction(JUMP, 0, "");
+    // On sait finalement où est la fin du premier if
+    // on modifie l'instruction qui saute le bloc si la condition est fausse
+    ps.allInstructions[$1.jump_if_false]->valueNum = ps.ic;
+}
+                bloc_else { 
+    // Fin du bloc IF/ELSE, l'instruction à la fin du premier if est modifiée pour arriver ici
+    ps.allInstructions[$1.jump]->valueNum = ps.ic;
+}
 bloc_else: ELSE '{' instructions '}' { } 
             | { }
 instruction : SOIT VAR VALANT expression {ps.addInstruction(STORE, 0, $2); }
@@ -138,29 +167,38 @@ instruction : SOIT VAR VALANT expression {ps.addInstruction(STORE, 0, $2); }
 
 bloc_tant_que : TANT_QUE {
     $1 = ps.getUniqueInternalId(); 
+    // création d'un label unique pour identifier le début de la boucle
     ps.labels["@@while_start_" + to_string($1)] = ps.ic;
 } '(' expression ')' {
+    // ajout d'une instruction de comparaison
     ps.addInstruction(JUMP_IF_FALSE, 0, "@@while_end_" + to_string($1));
     } '{' instructions '}' {
+        // ajout d'une instruction de saut inconditionnel vers le début de la boucle
         ps.addInstruction(JUMP, 0, "@@while_start_" + to_string($1));
-        ps.addInstruction(JUMP, 0, "@@while_end_" + to_string($1)); 
+        // label de fin de boucle qui sera ciblée par l'instruction JUMP_IF_FALSE
         ps.labels["@@while_end_" + to_string($1)] = ps.ic;
     }
 
 bloc_pour : POUR VAR ALLANT_DE expression {ps.addInstruction(STORE, 0, $2); } A {
      $1 = ps.getUniqueInternalId();
+     // création d'un label unique pour identifier le début de la boucle for
     ps.labels["@@for_start_" + to_string($1)] = ps.ic; 
 } expression { 
+    // on compare la variable de boucle avec la borne supérieure
     ps.addInstruction(LOAD_VARIABLE, 0, $2); 
-    ps.addInstruction(CMP_GT, 0, "");
+    ps.addInstruction(CMP_GT, 0, ""); // renvoie un booléen sur la pile
+    // on saute vers la fin de la boucle si la condition est fausse
     ps.addInstruction(JUMP_IF_FALSE, 0, "@@for_end_" + to_string($1));
 } 
 '{' instructions '}' { 
-    ps.addInstruction(LOAD_LITERAL, 1, "");
-    ps.addInstruction(LOAD_VARIABLE, 0, $2); 
-    ps.addInstruction(ADD, 0, "");
-    ps.addInstruction(STORE, 0, $2);
+    // on incrémente la variable de boucle
+    ps.addInstruction(LOAD_LITERAL, 1, ""); // LOAD 1 
+    ps.addInstruction(LOAD_VARIABLE, 0, $2);  // LOAD compteur
+    ps.addInstruction(ADD, 0, ""); // ADD (compteur = compteur + 1)
+    ps.addInstruction(STORE, 0, $2); // STORE compteur
+    // on saute au début de la boucle
     ps.addInstruction(JUMP, 0, "@@for_start_" + to_string($1)); 
+    // ajout d'un label qui marque la fin de la boucle
     ps.labels["@@for_end_" + to_string($1)] = ps.ic;
 }
 
@@ -220,6 +258,7 @@ void printProgram() {
     }
 }
 
+// Fonction principale
 int main(int argc, char** argv) {
     printf("AUTOUR ! V0.0\n<================>\n");
     
