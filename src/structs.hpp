@@ -4,40 +4,40 @@
 
 // Définition des types d'opcode
 enum opcode {
-    NOP,
-    LOAD_LITERAL,
-    LOAD_VARIABLE,
-    ADD,
-    SUB,
-    MUL,
-    DIV,
-    MOD,
-    STORE,
-    PRINT,
-    INPUT,
-    CALL,
-    RETURN,
-    HALT,
-    SLEEP,
-    JUMP,
-    JUMP_IF_FALSE,
-	CMP_EQ,
-	CMP_GT,
-	CMP_GTE,
-	CMP_LT,
-	CMP_LTE,
-	CMP_NEQ,
-    LOGIC_AND,
-    LOGIC_OR,
-    LOGIC_NOT,
-    NEG,
-    MATH_SQRT,
-    LOAD_LIST,
-    LOAD_LIST_ITEM,
-    STORE_LIST,
-    GRAPHICS_INIT,
-    COLOR_PIXEL,
-    GRAPHICS_UPDATE,
+    NOP, // Instruction vide
+    LOAD_LITERAL, // Charge une valeur littérale
+    LOAD_VARIABLE, // Charge une variable
+    ADD, // Addition ou concaténation
+    SUB, // Soustraction
+    MUL, // Multiplication
+    DIV, // Division
+    MOD, // Modulo
+    STORE, // Stocke une valeur dans une variable
+    PRINT, // Affiche une valeur
+    INPUT, // Demande une valeur à l'utilisateur
+    CALL, // Appelle une fonction
+    RETURN, // Retourne de la fonction
+    HALT, // Arrête le programme
+    SLEEP, // Met en pause le programme pour X millisecondes
+    JUMP, // Saut à une instruction
+    JUMP_IF_FALSE, // Saut à une instruction si la condition est fausse (dans la pile)
+	CMP_EQ, // Opérateur de comparaison ==
+	CMP_GT, // Opérateur de comparaison >
+	CMP_GTE, // Opérateur de comparaison >=
+	CMP_LT, // Opérateur de comparaison <
+	CMP_LTE, // Opérateur de comparaison <=
+	CMP_NEQ, // Opérateur de comparaison !=
+    LOGIC_AND,  // Opérateur logique ET
+    LOGIC_OR,  // Opérateur logique OU
+    LOGIC_NOT, // Opérateur logique NON
+    NEG, // Opérateur unaire de négation
+    MATH_SQRT, // Racine carrée
+    LOAD_LIST, // Charge une liste
+    LOAD_LIST_ITEM, // Charge un élément d'une liste
+    STORE_LIST, // Stocke une liste dans une variable
+    GRAPHICS_INIT, // Initialise la fenêtre graphique
+    COLOR_PIXEL, // Colorie un pixel
+    GRAPHICS_UPDATE, // Met à jour la fenêtre graphique
 };
 
 std::string opcodeToString(int code);

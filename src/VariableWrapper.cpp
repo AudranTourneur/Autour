@@ -168,7 +168,7 @@ bool VariableWrapper::operator<=(VariableWrapper &var) {
   return this->valueNumber <= var.valueNumber;
 }
 
-// Opérateur de négation unitaire pour les nombres
+// Opérateur de négation unaire pour les nombres
 VariableWrapper VariableWrapper::operator-() {
   VariableWrapper result;
   if (type == TYPE_NUMBER) {
